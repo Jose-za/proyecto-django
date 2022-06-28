@@ -81,11 +81,32 @@
 		<!-- /sidebar -->
 	</div>
 
+    <div class="page-content">
+    {% block encabezado %} <!--Template Tag-->
+
+    {%endblock%}
+
+    <!--Barra de navegación-->
+        <div class="breadcrumb-line">
+            <ul class="breadcrumb">
+                <a href="{%url 'Principal' %}">
+                    {% if request.path == '/' %}
+                        Principal
+                    {%else%}
+                        Principoal{{request.path}}
+                    {%endif%}
+                </a>
+            </ul>
+        </div>
+    <!--Barra de navegación-->
+
     <!--CONTENIDO-->
     {% block contenido %} <!--Template Tag-->
     <!--block sirve para indicar que colocaremos un bloque de
     contenido a través de nuestra variable content-->
     {% endblock %}
+
+    </div>
 
 </body>
 </html>

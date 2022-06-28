@@ -7,22 +7,27 @@
     {%static 'inicio/images/charla.png'%}
 {%endblock%}
 
+{% block encabezado %}
+
+<!--Encabezdo -->
+<div class="page-header">
+    <div class="page-title">
+        <h3>Contacto
+        <small>Deja tus dudas y comentarios</small></h3>
+    </div>
+
+    
+    
+</div>
+<!-- /Encabezado-->
+{%endblock%}
+
+
 {% block contenido %}
 <!-- Contenido Principal-->
-<div class="page-content">
 
 
-    <!--Encabezdo -->
-    <div class="page-header">
-        <div class="page-title">
-            <h3>Contacto
-            <small>Deja tus dudas y comentarios</small></h3>
-        </div>
 
-        
-        
-    </div>
-    <!-- /Encabezado-->
 
     <!-- Formulario -->
     <form class="form-horizontal" action="#" role="form">
@@ -53,6 +58,6 @@
         </div>
     </form>
 <!-- Fin del Formulario -->
-</div>
+
 <!-- /Contenido Principal-->
 {%endblock%}
