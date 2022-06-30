@@ -1,3 +1,5 @@
+from ast import mod
+from distutils.command.upload import upload
 from tabnanny import verbose
 from turtle import update
 from django.db import models
@@ -8,6 +10,7 @@ class Alumnos(models.Model): #Define la estructura de nuestra tabla
     nombre = models.TextField()#Texto largo
     carrera = models.TextField()
     turno = models.CharField(max_length=10)
+    imagen = models.ImageField(null=True, upload_to="fotos", verbose_name="Fotografía")
     created = models.DateTimeField(auto_now_add=True)#Fecha y tiempo
     update = models.DateTimeField(auto_now_add=True)
 
