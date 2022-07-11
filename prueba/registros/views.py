@@ -69,7 +69,6 @@ def eliminarUsuario(request, id, confirmacion= 'registros/eliminarUsuario.html')
 def editarUsuario(request, id):
     alumno = get_object_or_404(Alumnos, id=id)
     form = Usuario(request.POST, instance=alumno)
-    
     if form.is_valid():
         form.save()
         alumnos = Alumnos.objects.all()

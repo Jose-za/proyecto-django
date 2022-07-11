@@ -35,8 +35,8 @@ urlpatterns = [
     path('formEditarComentario/<int:id>/',views_registros.consultarComentario,name='ConsultaIndividual'),
 
     path('eliminarUsuario/<int:id>/',views_registros.eliminarUsuario,name='EliminarUsuario'),
-    path('ActualizarUsuario/<int:id>/',views_registros.actualizarUsuario,name='ActualizarAlumnos'),
-    path('editarUsuario/<int:id>/',views_registros.editarUsuario,name='EditarUsuario'),
+    path('ActualizarUsuario/<int:id>/',views_registros.editarUsuario,name='ActualizarAlumnos'),
+    path('editarUsuario/<int:id>/',views_registros.actualizarUsuario,name='EditarUsuario'),
 ]
 
 if settings.DEBUG:
