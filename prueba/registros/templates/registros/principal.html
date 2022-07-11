@@ -47,6 +47,12 @@
                     <td class="muted">{{alumno.nombre}}</td>
                     <td class="muted">{{alumno.carrera}}</td>
                     <td class="muted">{{alumno.turno}}</td> 
+                    <td class="text-center">
+                        <a href="{%url 'EliminarUsuario' alumno.id %}">Eliminar</a>
+                    </td>
+                    <td class="text-center">
+                        <a href="{%url 'EditarUsuario' alumno.id%}">Editar</a>
+                    </td>
                 </tr>
             {% endfor%}
         </tbody>

@@ -51,3 +51,4 @@ class ComentarioContacto(models.Model):
 
         def __Str__(self):
             return self.mensaje
+
