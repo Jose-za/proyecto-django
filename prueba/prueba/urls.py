@@ -17,29 +17,38 @@ from django.contrib import admin
 from django.urls import path
 from inicio import views
 from django.conf import settings
-#permite acceder a las variables MEDIA_URL Y MEDIA_ROOT que almacenan la
-#ubicacion de nuestras imagenes
 from registros import views as views_registros
-#Importamos la nueva vista de app registros para poder asignar las rutas de acceso a sus vistas
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views_registros.registros, name = "Principal"),
-    path('contacto/', views_registros.contacto, name="Contacto"),
-    path('formulario/', views.formulario, name="Formulario"),
-    path('ejemplo/', views.ejemplo, name="Ejemplo"),
-    path('registrar/', views_registros.registrar, name="Registrar"),
-    path('consultarComentario/', views_registros.comentariosRegistrados, name="Comentario"),
-    path('eliminarComentario/<int:id>/',views_registros.eliminarComentarioContacto,name='Eliminar'),
-    path('editarComentario/<int:id>/',views_registros.editarComentario,name='Editar'),
-    path('formEditarComentario/<int:id>/',views_registros.consultarComentario,name='ConsultaIndividual'),
+    path('',views_registros.registros ,name='Principal'),
+    path('formulario/',views.formulario,name='Formulario'),
+    path('contacto/',views_registros.contacto, name='Contacto'),
+    path('ejemplo/',views.ejemplo,name='ejemplo'),
+    path('registrar/', views_registros.registrar, name='Registrar'),
+    path('comentarios/', views_registros.coment, name='Comentario'),
+    path('eliminarComentario/<int:id>/', views_registros.eliminarComentarioContacto, name='Eliminar'),
+    path('formEditarComentario/<int:id>/', views_registros.consultarComentario, name='ConsultarIndividual'),
+    path('editarComentario/<int:id>/', views_registros.editarComentario, name='Editar'),
+    # Alumnos
+    path('registroAlumno/', views_registros.registroAlumnos, name='RegistrarAlumno'),
+    path('eliminarAlumno/<int:id>/', views_registros.eliminarAlumno, name='EliminarAlumno'),
+    path('formEditarAlumno/<int:id>/', views_registros.consultarAlumno, name='ConsultarIndividualAlumno'),
+    path('editarAlumno/<int:id>/', views_registros.editarAlumno, name='EditarA'),
+    path('consultas1/', views_registros.consultar1, name='Consultas'),
+    path('consultas2/', views_registros.consultar2, name='Consultas2'),
+    path('consultas3/', views_registros.consultar3, name='Consultas3'),
+    path('consultas4/', views_registros.consultar4, name='Consultas4'),
+    path('consultas5/', views_registros.consultar5, name='Consultas5'),
+    path('consultas6/', views_registros.consultar6, name='Consultas6'),
+    path('consultas7/', views_registros.consultar7, name='Consultas7'),
+    path('subir/', views_registros.archivos, name='Subir'),
+    path('consultasSQL/', views_registros.consultasSQL, name='sql'),
 
-    path('eliminarUsuario/<int:id>/',views_registros.eliminarUsuario,name='EliminarUsuario'),
-    path('ActualizarUsuario/<int:id>/',views_registros.editarUsuario,name='ActualizarAlumnos'),
-    path('editarUsuario/<int:id>/',views_registros.actualizarUsuario,name='EditarUsuario'),
+    path('seguridad/', views_registros.seguridad, name='Seguridad'),
 ]
+
 
 if settings.DEBUG:
     from django.conf.urls.static import static
-    urlpatterns += static(settings.MEDIA_URL,
-        document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

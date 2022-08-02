@@ -1,53 +1,87 @@
-
-from urllib import request
+from datetime import datetime
 from django.shortcuts import render
-from .models import Alumnos
-from .forms import ComentarioContactoForm, Usuario
-from .models import ComentarioContacto
+from .models import Alumnos, Comentario, ComentarioContacto
+from .forms import AlumnosForm, ComentarioContactoForm
 from django.shortcuts import get_object_or_404
+import datetime
+from .models import Archivos
+from .forms import FormArchivos
+from django.contrib import messages 
 
-# Create your views here.
+def registroAlumnos(request):
+    alumno = Alumnos.objects.all()
+    return render(request, 'registros/registroAlumnos.html', {'alumno': alumno})
+
+def registrarAlumno(request):
+    if request.method == 'POST':
+        form = AlumnosForm(request.POST)
+        if form.is_valid():
+            form.save()
+            alumnos = Alumnos.objects.all()
+            return render(request, 'registros/principal.html', {'alumnos': alumnos})
+        form = AlumnosForm()
+        # Si algo sale mal se reenvia al formulario los datos ingresados
+        return render(request, 'registros/registroAlumnos.html', {'form': form})
+
+# Eliminar Alumno
+def eliminarAlumno(request, id, confirmacion2 = 'registros/confirmarEliminacionAlumno.html'):
+    alumno = get_object_or_404(Alumnos, id=id)
+    if request.method == 'POST':
+        alumno.delete()
+        alumnos = Alumnos.objects.all()
+        return render(request, 'registros/principal.html', {'alumnos': alumnos})
+    return render(request, confirmacion2, {'object': alumno})
+
+def consultarAlumno(request, id):
+    alumno = Alumnos.objects.get(id=id)
+    return render(request, 'registros/formEditarAlumno.html', {'alumno': alumno})
+
+
+# Eliminar//
+
+# Editar
+def editarAlumno(request, id):
+    alumno = get_object_or_404(Alumnos, id=id)
+    form = AlumnosForm(request.POST, instance=alumno)
+    
+    if form.is_valid():
+            form.save()
+            alumnos = Alumnos.objects.all()
+            return render(request, 'registros/principal.html', {'alumnos': alumnos})
+    return render(request, 'registros/formEditarAlumno.html', {'alumno':alumno})
+
 def registros(request):
-    alumnos= Alumnos.objects.all()
-#all recupera todos los objetos del modelo  (registros de la tabla alumnos)
-    return render(request, "registros/principal.html" ,{'alumnos':alumnos})
-#Indicamos el lugar donde se renderizará el resultado de esta vista
-# y enviamos la lista de alumnos recuparados
+    alumnos=Alumnos.objects.all()
+    return render(request, 'registros/principal.html', {'alumnos':alumnos})
+
 
 def registrar(request):
     if request.method == 'POST':
         form = ComentarioContactoForm(request.POST)
-        if form.is_valid(): #Si los datos recibidos son correctos
-            form.save() #Inserta
+        if form.is_valid():
+            form.save()
             comentarios = ComentarioContacto.objects.all()
-            return render(request, "registros/comentariosRegistrados.html",{'comentarios': comentarios})
-    form = ComentarioContactoForm()
-    #Si salgo sale mal se reenvian al formulario los datos ingresados
-    return render(request, 'registros/contacto.html', {'form':form})
-
-def contacto(request):
-    return render(request, "registros/contacto.html")
-    #Indicamos el lugar donde se renderizará el resultado de esta vista
-    #Enviamos la lista de alumnos recuperados.
-
-def comentariosRegistrados(request):
-    comentarios = ComentarioContacto.objects.all()
-    return render(request, "registros/comentariosRegistrados.html",{'comentarios': comentarios})
-
-def eliminarComentarioContacto(request, id,
-    confirmacion='registros/confirmarEliminacion.html'):
+            return render(request, 'registros/comentarios.html', {'comentarios': comentarios})
+        form = ComentarioContactoForm()
+        # Si algo sale mal se reenvia al formulario los datos ingresados
+        return render(request, 'registros/contacto.html', {'form': form})
+    
+    # Eliminar Comentario
+def eliminarComentarioContacto(request, id, 
+    confirmacion = 'registros/confirmarEliminacion.html'):
     comentario = get_object_or_404(ComentarioContacto, id=id)
-    if request.method=='POST':
+    if request.method == 'POST':
         comentario.delete()
-        comentarios=ComentarioContacto.objects.all()
-        return render(request, "registros/comentariosRegistrados.html",
-            {'comentarios': comentarios})
-    return render(request, confirmacion, {'object':comentario})
+        comentarios = ComentarioContacto.objects.all()
+        return render(request, 'registros/comentarios.html', {'comentarios': comentarios})
+    return render(request, confirmacion, {'object': comentario})
 
 def consultarComentario(request, id):
     comentario = ComentarioContacto.objects.get(id=id)
     return render(request, 'registros/formEditarComentario.html', {'comentario': comentario})
+# Eliminar//
 
+# Editar
 def editarComentario(request, id):
     comentario = get_object_or_404(ComentarioContacto, id=id)
     form = ComentarioContactoForm(request.POST, instance=comentario)
@@ -55,41 +89,78 @@ def editarComentario(request, id):
     if form.is_valid():
         form.save()
         comentarios = ComentarioContacto.objects.all()
-        return render(request, 'registros/comentariosRegistrados.html', {'comentarios': comentarios})
+        return render(request, 'registros/comentarios.html', {'comentarios': comentarios})
     return render(request, 'registros/formEditarComentario.html', {'comentario':comentario })
 
-def eliminarUsuario(request, id, confirmacion= 'registros/eliminarUsuario.html'):
-    alumno= Alumnos.objects.get(id=id)
-    if request.method=='POST':
-        alumno.delete()
-        alumnos = Alumnos.objects.all()
-        return render(request,"registros/principal.html" ,{'alumnos':alumnos},)
-    return render(request, confirmacion, {'object':alumno})
 
-def editarUsuario(request, id):
-    alumno = get_object_or_404(Alumnos, id=id)
-    form = Usuario(request.POST, instance=alumno)
-    if form.is_valid():
-        form.save()
-        alumnos = Alumnos.objects.all()
-        return render(request, 'registros/principal.html', {'alumnos': alumnos})
-    return render(request, 'registros/editarUsuario.html', {'alumno':alumno })
+# /Editar
 
-def actualizarUsuario(request,id):
-    alumno = Alumnos.objects.get(id=id)
-    return render(request, 'registros/editarUsuario.html', {'alumno': alumno})
 
-# def actualizarUsuario(request, id):
-#     alumno = Alumnos.objects.get(id=id)
-#     return render(request, 'registros/editarUsuario.html', {'alumno': alumno})
+def contacto(request):
+    return render(request, "registros/contacto.html")
 
-# def editarUsuario(request, id):
-#     alumno = get_object_or_404(Alumnos, id=id)
-#     form = Usuario(request.POST, instance=alumno)
+
+def coment(request):
+    comentarios = ComentarioContacto.objects.all()
+    return render(request, 'registros/comentarios.html', {'comentarios': comentarios})
     
-#     if form.is_valid():
-#         form.save()
-#         alumnos = Alumnos.objects.all()
-#         return render(request, 'registros/principal.html', {'alumnos': alumnos})
-#     return render(request, 'registros/editarUsuario.html', {'alumno':alumno })
+    
+def consultar1(request,):
+    alumnos = Alumnos.objects.filter(carrera="Ti")
+    return render(request, 'registros/consultas.html', {'alumnos': alumnos})
 
+
+def consultar2(request,):
+    alumnos = Alumnos.objects.filter(carrera="Ti").filter(turno="Matutino")
+    return render(request, 'registros/consultas.html', {'alumnos': alumnos})
+
+
+def consultar3(request,):
+    alumnos = Alumnos.objects.all().only('matricula', 'nombre', 'carrera', 'turno', 'imagen')
+    return render(request, 'registros/consultas.html', {'alumnos': alumnos})
+
+
+def consultar4(request,):
+    alumnos = Alumnos.objects.filter(turno__contains="Vesp")
+    return render(request, 'registros/consultas.html', {'alumnos': alumnos})
+
+
+def consultar5(request,):
+    alumnos = Alumnos.objects.filter(nombre__in=['Juan', 'Ana'])
+    return render(request, 'registros/consultas.html', {'alumnos': alumnos})
+
+
+def consultar6(request,):
+    fechaInicio = datetime.date(2022, 7, 1)
+    fechaFin = datetime.date(2022, 7, 14)
+    alumnos = Alumnos.objects.filter(created__range=(fechaInicio, fechaFin))
+    return render(request, 'registros/consultas.html', {'alumnos': alumnos})
+
+def consultar7(request,):
+    alumnos = Alumnos.objects.filter(comentario__coment__contains="Hola")
+    return render(request, 'registros/consultas.html', {'alumnos': alumnos})
+
+
+def archivos(request):
+    if request.method == 'POST':
+        form = FormArchivos(request.POST, request.FILES)
+        if form.is_valid():
+            titulo =request.POST['titulo']
+            descripcion =request.POST['descripcion']
+            archivo =request.FILES['archivo']
+            insert = Archivos(titulo=titulo, descripcion=descripcion, archivo=archivo)
+            insert.save()
+            return render(request, 'registros/archivos.html')
+        else:
+            messages.error(request, 'Error al subir el archivo')
+    else:
+        return render(request, 'registros/archivos.html', {'archivo':Archivos})
+    
+def consultasSQL(request):
+    alumnos=Alumnos.objects.raw('SELECT id, matricula, nombre, carrera, turno, imagen FROM registros_alumnos where carrera="TI" ORDER BY turno DESC')
+    return render (request, 'registros/consultas.html', {'alumnos':alumnos})
+
+def seguridad(request, nombre=None):
+    nombre = request.GET.get('nombre')
+    return render(request, "registros/seguridad.html",
+    {'nombre' : nombre})

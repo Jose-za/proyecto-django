@@ -1,8 +1,5 @@
-{% extends "inicio/encabezado.html" %}
+{% extends 'inicio/encabezado.html' %} {% block titulo %} Eliminar {% endblock %} {% block imagen %} {%load static%} {%static 'inicio/imagenes/comment.png'%} {% endblock %} {% block text %} Coment <span>TIC</span> {% endblock %} {% block encabezado %}
 
-{% block titulo %} Editar {% endblock %}
-
-{% block encabezado %}
 
 <!--Encabezdo -->
 <div class="page-header">
@@ -35,7 +32,7 @@
             </div>
 
             <div class="form-actions text-right">
-                <input type="submit" value="Editar" class="btn btn-primary">
+                <input type="submit" value="Enviar" class="btn btn-primary">
             </div>
 
         </div>
@@ -44,8 +41,6 @@
 
 </div>
 <!-- /Alert -->
-<button type="submit" class="btn btn-danger">Si</button>
-    <a href="{% url 'Comentario' %}" class="btn btn-primary">Cancelar</a>
-</form>
+
 
 {% endblock %}

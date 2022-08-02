@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-i-*4$&27@nk9h$vj_5ejujybk^y@+%n&3#=&stv%9aa&zf68h0'
+SECRET_KEY = 'django-insecure-nnk=3wofe6ircyn)6*&rxg@khmob%ed*ii&5r&0h=4fs1&hsnd'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'inicio',
     'registros.apps.RegistrosConfig',
     'ckeditor',
+    
 ]
 
 MIDDLEWARE = [
@@ -79,8 +80,12 @@ WSGI_APPLICATION = 'prueba.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'ejemplo',
+        'USER': 'root',
+        'PASSWORD': '7358724',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
 
@@ -121,26 +126,23 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-#Archivos fotográficos
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-
-#CKEDITOR
+# CKEDITOR
 CKEDITOR_CONFIGS = {
-    'default': {
-        'toolbar':'Custom',
-        'toolbar_Custom': [
-            ['Bold', 'Italic', 'Underline'],
-            ['NumberedList', 'BulletedList', '-','Outdent', 'Indent','-'],
-            ['JustifyLeft', 'JustifyCenter', 'JustifyRight','JustifyBlock'],
-            ['Link', 'Unlink'],
-            ['RemoveFormat', 'Source'],
-        ] 
+    'default': { 'toolbar': 'Custom',
+                'toolbar_Custom': [
+                    ['Bold', 'Italic', 'Underline'],
+                    ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+                ['Link', 'Unlink'],
+                ['RemoveFormat', 'Source']
+                ]    
     }
 }

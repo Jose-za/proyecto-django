@@ -1,31 +1,38 @@
-{% extends "inicio/encabezado.html" %}
+{% extends 'inicio/encabezado.html' %} 
 
 {% block titulo %} Formulario {% endblock %}
 
-{%block imagen%}
-    {%load static%}
-    {%static 'inicio/images/registro.png'%}
-{%endblock%}
+
+{% block imagen %}
+{%load static%}
+{%static 'inicio/imagenes/registro.png'%}
+{% endblock %}
+
+{% block text %}
+Form <span>TIC</span>
+{% endblock %}
 
 
 {% block encabezado %}
 
-	<!--Encabezdo -->
-		<div class="page-header">
-			<div class="page-title">
-				<h3>Registro
-				<small>Ingresa tu información</small></h3>
-			</div>
 
-		</div>
-	<!-- /Encabezado-->
-{%endblock%}
+			<!--Encabezdo -->
+			<div class="page-header">
+				<div class="page-title">
+					<h3>Registro
+				    <small>Ingresa tu información</small></h3>
+				</div>
+
+			</div>
+			<!-- /Encabezado-->
+				
+{% endblock %}
+				
+				
 
 {% block contenido %}
 
-		<!-- Contenido Principal-->
-
-		<!-- Formulario -->
+			<!-- Formulario -->
 			<form class="form-horizontal" action="#" role="form">
 	            <div class="panel panel-default">
 	                <div class="panel-body">
@@ -70,8 +77,8 @@
 				</div>
 			</form>
 		<!-- Fin del Formulario -->
-		
-		<!-- /Contenido Principal-->
+
+
 
 
 {% endblock %}

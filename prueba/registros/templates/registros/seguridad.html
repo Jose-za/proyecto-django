@@ -1,0 +1,40 @@
+
+{% extends 'inicio/encabezado.html' %} {% block titulo %} SEGURIDADS {% endblock %} {% block imagen %} {%load static%} {%static 'inicio/imagenes/contacto.png'%} {% endblock %} {% block text %} Contact <span>TIC</span> {% endblock %} {% block encabezado
+    %} {% block encabezado %}
+    
+    
+    <!--Encabezdo -->
+    <div class="page-header">
+        <div class="page-title">
+            <h3>Seguridad
+                <small>Ingresa tu información</small></h3>
+        </div>
+    
+    </div>
+    <!-- /Encabezado-->
+    
+    {% endblock %} {% block contenido %}
+    
+    
+    <!-- Formulario -->
+    <form method="GET">
+        Nombre:
+        <input type="text" name="nombre"/>
+        <input type="submit" value="Buscar"/>
+    </form>
+    <h2> Resultado: {{nombre|safe}} </h2>
+    <!--Busqueda-->
+    <script type="application/javascript">
+        var busqueda = new URLSearchParams(document.location.search);
+        if (busqueda.has("nombre")){
+            document.getElementById("resultado").innerHTML = "Resultado: "
+            + busqueda.get("nombre")
+        }
+    </script>
+    <!-- Fin del Formulario -->
+    
+    
+    
+    
+    
+    {% endblock %}
